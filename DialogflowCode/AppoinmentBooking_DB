@@ -1,0 +1,22 @@
+async function AddAppointmentBooking(appointmentTimeString, appointment_type, Patient_ID) {
+      
+			// Get parameter from Dialogflow with the string to add to the database
+			var databaseEntry = {
+				"PatientID": Patient_ID,
+				"AppointmentDate": appointmentTimeString,
+				"AppointmentType": appointment_type
+			};
+			
+			// Obtain and store the current user's Patient ID
+		//	let Patient_ID = agent.parameters.UserInfo_PatientID;
+
+			// Try to create a new user information file
+					try {
+						await db.collection("Appointment").doc(Patient_ID).set(databaseEntry);
+					//	agent.add(`User information added successfully! Thanks!`);
+						console.log(`Added appointment information for user ${Patient_ID}`);
+					} catch(err) {
+					//	agent.add(`We tried to add your appointment information, but we ran into an issue. Please try again later!`);
+						console.error(err.message);
+					}
+				}
